@@ -287,6 +287,7 @@ class KotlinCommonCompilation(
         get() = target.project.kotlinExtension.sourceSets.getByName(commonSourceSetName)
 }
 
+ @Suppress("DEPRECATION")
 class KotlinNativeCompilation(
     override val target: KotlinNativeTarget,
     name: String
@@ -400,14 +401,6 @@ class KotlinNativeCompilation(
     // Naming
     override val processResourcesTaskName: String
         get() = disambiguateName("processResources")
-
-    // TODO: Add linkAll task and add a deprecation here.
-    val linkAllTaskName: String
-        get() = lowerCamelCaseName(
-            "link",
-            compilationName.takeIf { it != "main" }.orEmpty(),
-            target.disambiguationClassifier
-        )
 
     fun linkTaskName(kind: NativeOutputKind, buildType: NativeBuildType): String =
         lowerCamelCaseName(
